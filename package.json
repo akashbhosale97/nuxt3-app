@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.2",
+    "nuxt": "3.0.0-rc.6"
+  },
+  "dependencies": {
+    "@contentstack/live-preview-utils": "^1.1.0",
+    "@contentstack/utils": "^1.1.2",
+    "contentstack": "^3.15.2"
+  }
+}
