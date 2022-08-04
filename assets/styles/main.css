@@ -50,11 +50,10 @@ body p {
 
 .note-div {
   background: #f2efff;
+  text-align: center;
 }
 
 .note-div p {
-  margin: 0 auto;
-  text-align: center;
   padding: 5px 0;
   color: #222222;
 }
