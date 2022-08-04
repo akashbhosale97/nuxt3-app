@@ -8,7 +8,8 @@
   />
 </template>
 
-<script lang="ts">
+<script>
+  import { useRoute } from 'vue-router';
   import { getPageRes } from '~/helper';
   export default {
     data() {
@@ -18,7 +19,7 @@
     },
     methods: {
       async fetchData() {
-        let response = await getPageRes('/');
+        let response = await getPageRes(`${window.location.pathname}`);
         this.data = response;
       },
     },

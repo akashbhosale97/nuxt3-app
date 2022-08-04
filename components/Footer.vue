@@ -43,9 +43,10 @@
         </div>
       </div>
     </div>
-    <!-- <div class="copyright">
-      {{ footerData.copyright.children[0].children[0].text }}
-    </div> -->
+    <!-- <div
+      class="copyright"
+      v-html="footerData.copyright.children[0].children[0].text"
+    /> -->
   </footer>
 </template>
 
@@ -61,7 +62,6 @@
       async fetchFooterData() {
         let response = await getFooterRes();
         this.footerData = response;
-        console.log(this.footerData);
       },
     },
     mounted() {
