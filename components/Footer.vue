@@ -43,10 +43,7 @@
         </div>
       </div>
     </div>
-    <!-- <div
-      class="copyright"
-      v-html="footerData.copyright.children[0].children[0].text"
-    /> -->
+    <div class="copyright" v-html="footerData?.copyright" />
   </footer>
 </template>
 

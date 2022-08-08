@@ -2,10 +2,6 @@ import { defineNuxtConfig } from 'nuxt';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  css: [
-    '~/assets/styles/main.css',
-    '~/assets/styles/thirdparty.css',
-    '@contentstack/live-preview-utils/dist/main.css',
-  ],
+  css: ['~/assets/styles/main.css', '~/assets/styles/thirdparty.css'],
   ssr: false,
 });
