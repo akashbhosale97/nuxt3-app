@@ -12,7 +12,7 @@ export const getHeaderRes = async () => {
   if (typeof window !== 'undefined') {
     addEditableTags(response[0], 'header', true);
   }
-  liveEdit && addEditableTags(response[0][0], 'header', true);
+  liveEdit && addEditableTags(response[0], 'header', true);
   return response[0];
 };
 
@@ -22,7 +22,7 @@ export const getFooterRes = async () => {
     referenceFieldPath: undefined,
     jsonRtePath: ['copyright'],
   });
-  liveEdit && addEditableTags(response[0][0], 'footer', true);
+  liveEdit && addEditableTags(response[0], 'footer', true);
   return response[0];
 };
 
@@ -59,9 +59,7 @@ export const getBlogListRes = async () => {
     jsonRtePath: ['body'],
   });
   liveEdit &&
-    response[0].forEach((entry: any) =>
-      addEditableTags(entry, 'blog_post', true)
-    );
+    response.forEach((entry: any) => addEditableTags(entry, 'blog_post', true));
   return response;
 };
 
