@@ -37,6 +37,7 @@ ContentstackLivePreview.init({
   },
   ssr: false,
 });
+export const { onEntryChange } = ContentstackLivePreview;
 
 const getter = {
   getEntry({ contentTypeUid, referenceFieldPath, jsonRtePath }: GetEntry) {

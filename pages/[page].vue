@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import { useRoute } from 'vue-router';
   import { getPageRes } from '~/helper';
+  import { onEntryChange } from '~/sdk';
   export default {
     data() {
       return {
@@ -25,6 +25,7 @@
     },
     mounted() {
       this.fetchData();
+      onEntryChange(this.fetchData);
     },
   };
 </script>

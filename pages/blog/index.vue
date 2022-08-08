@@ -55,7 +55,6 @@
 
 <script>
   import { getBlogListRes, getPageRes } from '~/helper';
-  import moment from 'moment';
   export default {
     data() {
       return {

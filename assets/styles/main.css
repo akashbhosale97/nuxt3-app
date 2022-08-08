@@ -39,7 +39,6 @@ body a {
 
 body p {
   color: #444444;
-  margin: 0.5rem 0;
 }
 
 .max-width {
@@ -56,6 +55,7 @@ body p {
 .note-div p {
   padding: 5px 0;
   color: #222222;
+  margin: 0 auto;
 }
 
 nav ul {

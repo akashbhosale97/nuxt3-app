@@ -10,6 +10,7 @@
 
 <script lang="ts">
   import { getPageRes } from '~/helper';
+  import { onEntryChange } from '~/sdk';
   export default {
     data() {
       return {
@@ -24,6 +25,7 @@
     },
     mounted() {
       this.fetchData();
+      onEntryChange(this.fetchData);
     },
   };
 </script>
