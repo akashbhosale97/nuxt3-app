@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ESNext",
     "jsx": "preserve",
     "module": "ESNext",
     "moduleResolution": "Node",

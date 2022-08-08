@@ -6,7 +6,7 @@
     >
       <div class="contact-page-content">
         <h1>{{ data.title }}</h1>
-        <p v-html="data.description.children[0].children[0].text"></p>
+        <p v-html="data.description"></p>
       </div>
       <div class="contact-page-form" v-html="data.html_code"></div>
     </div>
@@ -17,15 +17,13 @@
       <div class="maps-details" v-html="data.html_code"></div>
       <div class="contact-maps-content">
         <h2>{{ data.title }}</h2>
-        <p v-html="data.description.children[0].children[0].text"></p>
+        <p v-html="data.description"></p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { PropType } from 'vue';
-
   export default {
     props: {
       data: {

@@ -7,8 +7,8 @@
       data-contenttype="page"
       :data-locale="banner.locale"
     >
-      <div class="blog-column-left">
-        <template v-for="(list, index) in recentBlog" :key="index">
+      <div class="blog-column-left" v-if="blogList">
+        <template v-for="(list, index) in blogList.slice(0, 3)" :key="index">
           <div class="blog-list">
             <NuxtLink :to="list.url">
               <img
@@ -22,10 +22,14 @@
                 <h3>{{ list.title }}</h3>
               </NuxtLink>
               <p>
-                {{ moment(list.date) }},
-                <strong>{{ list.author[0].title }}</strong>
+                {{ list.date }},
+                <template v-if="list.author">
+                  <strong>{{ list.author[0].title }}</strong>
+                </template>
               </p>
-              <p v-html="list.body.slice(0, 250)" />
+              <template v-if="list.body">
+                <p v-html="list.body.slice(0, 250)" />
+              </template>
               <NuxtLink :to="list.url">
                 <span>Read more --&gt;</span>
               </NuxtLink>
@@ -35,14 +39,15 @@
       </div>
       <div class="blog-column-right">
         <h2>{{ banner.page_components[1].widget.title_h2 }}</h2>
-        <template v-for="(component, index) in archivedList" :key="index">
-          <NuxtLink :to="component.url">
-            <div>
-              <h4>{{ component.title }}</h4>
-              <p v-html="component.body.slice(0, 80)" />
-            </div>
-          </NuxtLink>
-        </template>
+        <template v-if="archived">
+          <template v-for="(component, index) in archived" :key="index">
+            <NuxtLink :to="component.url">
+              <div>
+                <h4>{{ component.title }}</h4>
+                <p v-html="component.body.slice(0, 80)" />
+              </div>
+            </NuxtLink> </template
+        ></template>
       </div>
     </div>
   </main>
@@ -50,11 +55,13 @@
 
 <script>
   import { getBlogListRes, getPageRes } from '~/helper';
+  import moment from 'moment';
   export default {
     data() {
       return {
         banner: null,
         blogList: null,
+        archived: [],
       };
     },
     methods: {
@@ -63,9 +70,13 @@
         this.banner = response;
       },
       async fetchBlogList() {
-        let response = await getBlogListRes();
-        this.blogList = response;
-        console.log(response);
+        await getBlogListRes()
+          .then((response) => (this.blogList = response))
+          .then((blog) => {
+            blog.map((single) => {
+              if (single.is_archived) this.archived.push(single);
+            });
+          });
       },
     },
     mounted() {

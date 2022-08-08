@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  export default {};
+  import '@contentstack/live-preview-utils/dist/main.css';
 </script>
 
 <style></style>

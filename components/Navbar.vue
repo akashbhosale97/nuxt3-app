@@ -2,12 +2,7 @@
   <header class="header" v-if="headerData">
     <template v-if="headerData.notification_bar.show_announcement">
       <div class="note-div">
-        <span
-          v-html="
-            headerData.notification_bar.announcement_text.children[0]
-              .children[0].text
-          "
-        />
+        <span v-html="headerData.notification_bar.announcement_text" />
       </div>
     </template>
     <div class="max-width header-div">

@@ -1,16 +1,18 @@
 import Contentstack from 'contentstack';
+import * as Utils from '@contentstack/utils';
+import ContentstackLivePreview from '@contentstack/live-preview-utils';
 
 type GetEntry = {
   contentTypeUid: string;
   referenceFieldPath: string[] | undefined;
-  // jsonRtePath: string[] | undefined;
+  jsonRtePath: string[] | undefined;
 };
 
 type GetEntryByUrl = {
   entryUrl: string | undefined;
   contentTypeUid: string;
   referenceFieldPath: string[] | undefined;
-  // jsonRtePath: string[] | undefined;
+  jsonRtePath: string[] | undefined;
 };
 
 const Stack = Contentstack.Stack({
@@ -19,15 +21,41 @@ const Stack = Contentstack.Stack({
   environment: `${import.meta.env.VITE_CONTENTSTACK_ENVIRONMENT}`,
 });
 
+const renderOption = {
+  span: (node: any, next: any) => next(node.children),
+};
+
+ContentstackLivePreview.init({
+  //@ts-ignore
+  stackSdk: Stack,
+  clientUrlParams: {
+    host: `${import.meta.env.VITE_CONTENTSTACK_APP_HOST}`,
+  },
+  stackDetails: {
+    apiKey: `${import.meta.env.VITE_API_KEY}`,
+    environment: `${import.meta.env.VITE_ENVIRONMENT}`,
+  },
+  ssr: false,
+});
+
 const getter = {
-  getEntry({ contentTypeUid, referenceFieldPath }: GetEntry) {
+  getEntry({ contentTypeUid, referenceFieldPath, jsonRtePath }: GetEntry) {
     return new Promise((resolve, reject) => {
       const Query = Stack.ContentType(contentTypeUid).Query();
       if (referenceFieldPath) Query.includeReference(referenceFieldPath);
-      Query.toJSON()
+      Query.includeOwner()
+        .toJSON()
         .find()
         .then(
-          (result) => resolve(result[0]),
+          (result) => {
+            jsonRtePath &&
+              Utils.jsonToHTML({
+                entry: result,
+                paths: jsonRtePath,
+                renderOption,
+              });
+            resolve(result[0]);
+          },
           (error) => reject(error)
         );
     });
@@ -36,6 +64,7 @@ const getter = {
     contentTypeUid,
     entryUrl,
     referenceFieldPath,
+    jsonRtePath,
   }: GetEntryByUrl) {
     return new Promise((resolve, reject) => {
       const blogQuery = Stack.ContentType(contentTypeUid).Query();
@@ -43,7 +72,15 @@ const getter = {
       blogQuery.includeOwner().toJSON();
       const data = blogQuery.where('url', `${entryUrl}`).find();
       data.then(
-        (result) => resolve(result[0]),
+        (result) => {
+          jsonRtePath &&
+            Utils.jsonToHTML({
+              entry: result,
+              paths: jsonRtePath,
+              renderOption,
+            });
+          resolve(result[0]);
+        },
         (error) => reject(error)
       );
     });
