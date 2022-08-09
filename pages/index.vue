@@ -8,7 +8,7 @@
   />
 </template>
 
-<script lang="ts">
+<script>
   import { getPageRes } from '~/helper';
   import { onEntryChange } from '~/sdk';
 
@@ -16,7 +16,6 @@
     data() {
       return {
         data: null,
-        url: window.location.pathname,
       };
     },
     methods: {

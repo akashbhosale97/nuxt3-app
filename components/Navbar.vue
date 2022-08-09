@@ -37,15 +37,20 @@
           </li>
         </ul>
       </nav>
-      <!-- <div class="json-preview">
-        <Tooltip content="JSON Preview" direction="top"></Tooltip>
-      </div> -->
+      <div class="json-preview">
+        <ToolTip content="JSON Preview" direction="top">
+          <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <img src="../static/json.svg" alt="JSON Preview icon" />
+          </span>
+        </ToolTip>
+      </div>
     </div>
   </header>
 </template>
 
 <script>
   import { getHeaderRes } from '~/helper';
+  import ToolTip from './ToolTip.vue';
   export default {
     data() {
       return {
@@ -61,5 +66,6 @@
     mounted() {
       this.fetchHeaderData();
     },
+    components: { ToolTip },
   };
 </script>

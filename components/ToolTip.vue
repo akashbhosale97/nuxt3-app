@@ -1,16 +1,27 @@
 <template>
-  <div class="Tooltip-Wrapper">
-    <span data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      <img src="../static/json.svg" alt="JSON Preview icon" />
-    </span>
-    <div ref="toolTipRef" class="Tooltip-top">
-      JSON Preview
-    </div>
+  <div class="Tooltip-Wrapper" :onmouseenter="showTip" :onmouseleave="hideTip">
+    <slot />
+    <div id="toolTipRef" class="Tooltip-Tip top none">{{ content }}</div>
   </div>
 </template>
 
 <script lang="ts">
-export default {}
+  export default {
+    props: ['content'],
+    data() {
+      return {};
+    },
+    methods: {
+      showTip() {
+        //@ts-ignore
+        document.getElementById('toolTipRef').style.display = 'block';
+      },
+      hideTip() {
+        //@ts-ignore
+        document.getElementById('toolTipRef').style.display = 'none';
+      },
+    },
+  };
 </script>
 
 <style></style>
