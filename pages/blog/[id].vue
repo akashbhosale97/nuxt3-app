@@ -41,6 +41,7 @@
 
 <script lang="ts">
   import { getBlogPostRes, getPageRes } from '~/helper';
+  import { onEntryChange } from '~/sdk';
   import BlogBanner from '../../components/BlogBanner.vue';
   export default {
     components: {
@@ -64,8 +65,8 @@
       },
     },
     mounted() {
+      onEntryChange(this.fetchBlogPost);
       this.fetchBannerData();
-      this.fetchBlogPost();
     },
   };
 </script>

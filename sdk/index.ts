@@ -19,7 +19,20 @@ const Stack = Contentstack.Stack({
   api_key: `${import.meta.env.VITE_CONTENTSTACK_API_KEY}`,
   delivery_token: `${import.meta.env.VITE_CONTENTSTACK_DELIVERY_TOKEN}`,
   environment: `${import.meta.env.VITE_CONTENTSTACK_ENVIRONMENT}`,
+  live_preview: {
+    management_token: `${import.meta.env.VITE_CONTENTSTACK_MANAGEMENT_TOKEN}`
+      ? `${import.meta.env.VITE_CONTENTSTACK_MANAGEMENT_TOKEN}`
+      : '',
+    enable: true,
+    host: `${import.meta.env.VITE_CONTENTSTACK_API_HOST}`
+      ? `${import.meta.env.VITE_CONTENTSTACK_API_HOST}`
+      : '',
+  },
 });
+
+if (import.meta.env.VITE_CONTENTSTACK_API_HOST) {
+  Stack.setHost(`${import.meta.env.VITE_CONTENTSTACK_API_HOST}`);
+}
 
 const renderOption = {
   span: (node: any, next: any) => next(node.children),

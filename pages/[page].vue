@@ -24,7 +24,6 @@
       },
     },
     mounted() {
-      this.fetchData();
       onEntryChange(this.fetchData);
     },
   };

@@ -11,10 +11,12 @@
 <script lang="ts">
   import { getPageRes } from '~/helper';
   import { onEntryChange } from '~/sdk';
+
   export default {
     data() {
       return {
         data: null,
+        url: window.location.pathname,
       };
     },
     methods: {
@@ -24,7 +26,6 @@
       },
     },
     mounted() {
-      this.fetchData();
       onEntryChange(this.fetchData);
     },
   };

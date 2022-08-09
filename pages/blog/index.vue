@@ -55,6 +55,7 @@
 
 <script>
   import { getBlogListRes, getPageRes } from '~/helper';
+  import { onEntryChange } from '~/sdk';
   export default {
     data() {
       return {
@@ -69,17 +70,15 @@
         this.banner = response;
       },
       async fetchBlogList() {
-        await getBlogListRes()
-          .then((response) => (this.blogList = response))
-          .then((blog) => {
-            blog.map((single) => {
-              if (single.is_archived) this.archived.push(single);
-            });
-          });
+        let response = await getBlogListRes();
+        this.blogList = response;
+        response.map((single) => {
+          if (single.is_archived) this.archived.push(single);
+        });
       },
     },
     mounted() {
-      this.fetchData();
+      onEntryChange(this.fetchData);
       this.fetchBlogList();
     },
   };
