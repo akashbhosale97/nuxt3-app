@@ -37,7 +37,7 @@
         </div>
         <div class="modal-body">
           <pre v-if="json" id="jsonViewer">
-              <JsonViewer :value="json" sort theme="jv-light" />
+              <JsonViewer :value="json" theme="jv-light" />
           </pre>
         </div>
         <div class="modal-footer"></div>
@@ -55,6 +55,30 @@
     getHeaderRes,
     getPageRes,
   } from '~/helper';
+
+  function filterObject(inputObject) {
+    const unWantedProps = [
+      '$',
+      '_version',
+      'ACL',
+      '_owner',
+      '_in_progress',
+      'created_at',
+      'created_by',
+      'updated_at',
+      'updated_by',
+      'publish_details',
+    ];
+    for (const key in inputObject) {
+      unWantedProps.includes(key) && delete inputObject[key];
+      if (typeof inputObject[key] !== 'object') {
+        continue;
+      }
+      inputObject[key] = filterObject(inputObject[key]);
+    }
+    return inputObject;
+  }
+
   export default {
     components: { JsonViewer },
     data() {
@@ -85,15 +109,24 @@
           this.getPageData(),
           getFooterRes(),
           this.getBlogListData(),
-        ]).then(
-          (values) =>
-            (this.json = {
-              Header: values[0],
-              Page: values[1],
-              Footer: values[2],
-              BlogList: values[3],
-            })
-        );
+        ])
+          .then((values) => filterObject(values))
+          .then((json) => {
+            if (this.url.includes('/blog')) {
+              this.json = {
+                Header: json[0],
+                Page: json[1],
+                Footer: json[2],
+                BlogList: json[3],
+              };
+            } else {
+              this.json = {
+                Header: json[0],
+                Page: json[1],
+                Footer: json[2],
+              };
+            }
+          });
       },
     },
     mounted() {
