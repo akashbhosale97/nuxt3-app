@@ -14,23 +14,23 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2 id="staticBackdropLabel" class="modal-title">JSON Preview</h2>
-          <div
-            class="tooltip-wrapper"
-            @:click="copyObject(JSON.stringify(response))"
-          >
-            <div class="tooltip-copy">
-              <img src="../static/copy.svg" class="copyIcon" alt="copy icon" />
-              <div v-if="componentKey > 0" class="tooltip-top-copy">
-                {{ messageCopied }}
-              </div>
-              <div v-else class="tooltip-top-copy">
-                {{ messageCopy }}
-              </div>
-            </div>
+          <div class="tooltip-wrapper ms-auto">
+            <span
+              class="json-copy"
+              v-on:click="copyObject(JSON.stringify(json))"
+              aria-hidden="true"
+            >
+              <ToolTip
+                :content="forceUpdate === 1 ? 'copied' : 'copy'"
+                direction="top"
+              >
+                <img src="../static/copy.svg" alt="copy icon" />
+              </ToolTip>
+            </span>
           </div>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close m-0 ms-3"
             data-bs-dismiss="modal"
             aria-label="Close"
           />
@@ -55,6 +55,7 @@
     getHeaderRes,
     getPageRes,
   } from '~/helper';
+  import ToolTip from './ToolTip.vue';
 
   function filterObject(inputObject) {
     const unWantedProps = [
@@ -80,12 +81,15 @@
   }
 
   export default {
-    components: { JsonViewer },
+    components: { JsonViewer, ToolTip },
     data() {
       return {
         json: null,
-        url: window.location.pathname,
+        forceUpdate: 0,
       };
+    },
+    computed: {
+      url: () => window.location.pathname,
     },
     methods: {
       async getPageData() {
@@ -127,6 +131,13 @@
               };
             }
           });
+      },
+      async copyObject() {
+        this.forceUpdate = 1;
+        await navigator.clipboard.writeText(JSON.stringify(this.json));
+        setTimeout(() => {
+          this.forceUpdate = 0;
+        }, 3000);
       },
     },
     mounted() {

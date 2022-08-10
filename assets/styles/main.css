@@ -182,6 +182,18 @@ footer a {
   font-size: 0.9em;
 }
 
+.jv-key {
+  color: #c8501e;
+}
+
+.jv-item.jv-string {
+  color: #5d9ccb;
+}
+
+.jv-code {
+  font-size: 17px;
+}
+
 .blog-post h2 {
   margin: 0 0 12px;
 }
